@@ -1,5 +1,5 @@
-function Get-Command-Source($name) {
+function Get-CommandSource($name) {
     Get-Command $name | Select-Object -ExpandProperty Source
 }
 
-New-Alias -Name which -Value Get-Command-Source
+New-Alias -Name which -Value Get-CommandSource
