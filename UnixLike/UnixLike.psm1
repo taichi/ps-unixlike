@@ -5,12 +5,15 @@ function Get-CommandSource([Parameter(Mandatory=$True)][String]$Name) {
 function Select-PipedString(
     [Parameter(Mandatory)][String]$Regex
     , [String]$DirOrFile
-    , [bool]$Recurse = false
+    , [bool]$Recurse
     , [Parameter(ValueFromPipeline=$True)]$Input) {
-    $items = if(Test-Path -Path $DirOrFile -PathType Container) {
-        Get-ChildItem -Recurse $Recurse $DirOrFile | ForEach-Object { $_.ToString() }
-    } elseif($DirOrFile) {
-        Get-ChildItem $DirOrFile
+
+    $items = if($DirOrFile) {
+        if(Test-Path -Path $DirOrFile -PathType Container) {
+            Get-ChildItem -Recurse $Recurse $DirOrFile | ForEach-Object { $_.ToString() }
+        } else {
+            Get-ChildItem $DirOrFile
+        }
     } else {
         $Input | ForEach-Object { $_.ToString() }
     }
