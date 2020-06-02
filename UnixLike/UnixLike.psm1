@@ -23,7 +23,11 @@ function Select-PipedString(
     return $items | Select-String $Regex
 }
 
+function New-File([Parameter(Mandatory = $True)][String]$Name) {
+    New-Item -Type File $Name
+}
+
 New-Alias -Name which -Value Get-CommandSource
 New-Alias -Name df -Value Get-Volume
 New-Alias -Name grep -Value Select-PipedString
-
+New-Alias -Name touch -Value New-File
