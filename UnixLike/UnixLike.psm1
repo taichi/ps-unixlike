@@ -1,4 +1,4 @@
-function Get-CommandSource([Parameter(Mandatory=$True)][String]$Name) {
+function Get-CommandSource([Parameter(Mandatory = $True)][String]$Name) {
     Get-Command $Name | Select-Object -ExpandProperty Source
 }
 
@@ -6,15 +6,17 @@ function Select-PipedString(
     [Parameter(Mandatory)][String]$Regex
     , [String]$DirOrFile
     , [bool]$Recurse
-    , [Parameter(ValueFromPipeline=$True)]$Input) {
+    , [Parameter(ValueFromPipeline = $True)]$Input) {
 
-    $items = if($DirOrFile) {
-        if(Test-Path -Path $DirOrFile -PathType Container) {
+    $items = if ($DirOrFile) {
+        if (Test-Path -Path $DirOrFile -PathType Container) {
             Get-ChildItem -Recurse $Recurse $DirOrFile | ForEach-Object { $_.ToString() }
-        } else {
+        }
+        else {
             Get-ChildItem $DirOrFile
         }
-    } else {
+    }
+    else {
         $Input | ForEach-Object { $_.ToString() }
     }
 
